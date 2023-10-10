@@ -28,8 +28,6 @@ ext {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-//	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-//	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
@@ -39,6 +37,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	// JWT 기능을 위한 jjwt 라이브러리 ( Spring Security 기반의 애플리케이션에 JWT 적용하기 위해 )
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+	// Spring security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 }
 
 dependencyManagement {
