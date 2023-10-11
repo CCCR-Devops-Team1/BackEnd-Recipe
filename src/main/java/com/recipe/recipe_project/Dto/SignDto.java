@@ -13,6 +13,6 @@ public class SignDto {
   private String account;
   @NotBlank(message="pw는 필수 입력 사항입니다.")
   private String pw;
-  @NotBlank(message="confirm_account는 필수 입력 사항입니다.")
+  @NotBlank(message="confirm_pw는 필수 입력 사항입니다.")
   private String confirm_pw;
 }

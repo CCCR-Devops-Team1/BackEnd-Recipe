@@ -28,7 +28,7 @@ public class MemberController {
             return new ResponseDto(false, HttpStatus.BAD_REQUEST.value(), error_list);
         }else{
             if(!MemberValidation.isRegexAccount(signDto.getAccount())){
-                return new ResponseDto(ResponseStatus.SIGNUP_EMAIL_INVALID);
+                return new ResponseDto(ResponseStatus.SIGNUP_ACCOUNT_INVALID);
             }
             if(!MemberValidation.isRegexPw(signDto.getPw())){
                 return new ResponseDto(ResponseStatus.SIGNUP_PW_INVALID);
