@@ -83,4 +83,4 @@ logging:
     org.hibernate.orm.jdbc.bind: TRACE
     org.hibernate.orm.jdbc.extract: TRACE
 jwt:
-  secretKey: 123
+  secretKey: 123nu23n1u23h129312312312
