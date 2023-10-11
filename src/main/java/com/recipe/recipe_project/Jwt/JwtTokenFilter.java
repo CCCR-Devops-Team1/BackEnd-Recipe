@@ -36,14 +36,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
       }
       token = token.replace("Bearer ","");
 
-      String account = jwtTokenProvider.getUserAccount(token);
-      String pw = jwtTokenProvider.getUserPw(token);
-      System.out.println(account +" / "+pw);
-
+      Authentication authentication = jwtTokenProvider.getAuthentication(token);
+      String account = authentication.getName();
+      System.out.println(account);
       if(account != null){
-        Member member = memberRepository.findByAccount(account).get();
-        Authentication authentication = new UsernamePasswordAuthenticationToken(
-            account, pw, member.getGrantedAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
       }
     }catch (BaseException e){

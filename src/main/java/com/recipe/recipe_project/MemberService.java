@@ -1,6 +1,7 @@
 package com.recipe.recipe_project;
 
 import com.recipe.recipe_project.Dto.LoginDto;
+import com.recipe.recipe_project.Dto.TokenDto;
 import com.recipe.recipe_project.Exception.BaseException;
 import com.recipe.recipe_project.Jwt.JwtTokenProvider;
 import com.recipe.recipe_project.Security.CustomAuthenticationProvider;
@@ -33,8 +34,9 @@ public class MemberService {
     memberRepository.save(member);
   }
 
-  public String login(LoginDto loginDto) {
-    String token = "";
+  public TokenDto login(LoginDto loginDto) {
+    String access_token = "";
+    String refresh_token = "";
     try{
       Authentication authentication = customAuthenticationProvider.authenticate(
           new UsernamePasswordAuthenticationToken(loginDto.getAccount(), loginDto.getPw()));
@@ -42,7 +44,8 @@ public class MemberService {
       sc.setAuthentication(authentication);
       SecurityContextHolder.setContext(sc);
 
-      token = jwtTokenProvider.createToken(loginDto.getAccount(), loginDto.getPw());
+      access_token = jwtTokenProvider.createAccessToken(loginDto.getAccount(), loginDto.getPw());
+      refresh_token = jwtTokenProvider.createRefreshToken(loginDto.getAccount(), loginDto.getPw());
     }catch(UsernameNotFoundException e){
       throw new BaseException(NOT_FOUND_MEMBER);
     } catch(Exception e){
@@ -53,6 +56,6 @@ public class MemberService {
       throw new BaseException(LOGIN_FAIL);
     }
 
-    return token;
+    return new TokenDto(access_token,refresh_token);
   }
 }

@@ -4,9 +4,13 @@ import com.recipe.recipe_project.Dto.LoginDto;
 import com.recipe.recipe_project.Dto.Response.ResponseDto;
 import com.recipe.recipe_project.Dto.Response.ResponseStatus;
 import com.recipe.recipe_project.Dto.SignDto;
+import com.recipe.recipe_project.Dto.TokenDto;
 import com.recipe.recipe_project.Util.MemberValidation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.antlr.v4.runtime.Token;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
@@ -21,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
+    private final RedisTemplate<String, String> redisTemplate;
     @PostMapping("/user/signup")
     public ResponseDto signup(@Valid @RequestBody SignDto signDto, BindingResult bindingResult){
         List<String> error_list = MemberValidation.getValidationError(bindingResult);
@@ -48,14 +53,15 @@ public class MemberController {
         if(!error_list.isEmpty()){
             return new ResponseDto(error_list);
         }
-        String token = memberService.login(loginDto);
+        TokenDto tokenDto = memberService.login(loginDto);
         // Security Context에 저장된 사용자 확인
         System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
-
-        return new ResponseDto(token);
+        System.out.println(redisTemplate.opsForValue().get("account"));
+        return new ResponseDto(tokenDto);
     }
     @GetMapping("/test")
     public String test(){
+        System.out.println(redisTemplate.opsForValue().get("account"));
         return "success";
     }
 
