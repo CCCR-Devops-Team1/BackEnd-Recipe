@@ -16,7 +16,9 @@ public enum ResponseStatus {
   FAIL_AUTH_JWT(false, HttpStatus.BAD_REQUEST.value(), "JWT인증 실패입니다."),
   NOT_FOUND_MEMBER(false,HttpStatus.BAD_REQUEST.value(), "가입되지 않은 email입니다."),
   SIGNUP_DUPLI_MEMBER(false,HttpStatus.BAD_REQUEST.value(), "이미 사용중인 Email입니다."),
-  SIGNUP_ACCOUNT_INVALID(false, HttpStatus.BAD_REQUEST.value(), "계정ID는 8~20자 내로 입력해주세요.");
+  SIGNUP_ACCOUNT_INVALID(false, HttpStatus.BAD_REQUEST.value(), "계정ID는 8~20자 내로 입력해주세요."),
+  EXPIRED_JWT(false, HttpStatus.FORBIDDEN.value(),"만료된 Access 토큰입니다. Refresh 토큰을 이용해서 새로운 Access토큰을 발급받으세요."),
+  REDIS_ERROR(false, HttpStatus.BAD_REQUEST.value(), "redis 연결에 실패했습니다.");
 
   private final boolean isSuccess;
   private final int code;

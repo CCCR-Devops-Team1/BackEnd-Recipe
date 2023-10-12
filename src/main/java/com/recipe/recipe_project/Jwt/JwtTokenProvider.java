@@ -1,10 +1,8 @@
 package com.recipe.recipe_project.Jwt;
 
+import com.recipe.recipe_project.Exception.BaseException;
 import com.recipe.recipe_project.Security.CustomUserDetailsService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import jakarta.xml.bind.DatatypeConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +21,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import static com.recipe.recipe_project.Dto.Response.ResponseStatus.EXPIRED_JWT;
+import static com.recipe.recipe_project.Dto.Response.ResponseStatus.INVALID_JWT;
 
 @Component
 @RequiredArgsConstructor
@@ -63,10 +64,23 @@ public class JwtTokenProvider {
         .signWith(SignatureAlgorithm.HS256, secretkey)
         .compact();
     redisTemplate.opsForValue().set(
-        "account",
-        refreshToken
+        account,
+        refreshToken,
+        refreshExpirationTime,
+        TimeUnit.MILLISECONDS
     );
     return refreshToken;
+  }
+
+  public boolean validateToken(String token){
+    try{
+      Jwts.parser().setSigningKey(secretkey).parseClaimsJws(token);
+      return true;
+    }catch (ExpiredJwtException e){
+      throw new BaseException(EXPIRED_JWT);
+    }catch (JwtException e){
+      throw new BaseException(INVALID_JWT);
+    }
   }
   private Map<String, Object> createHeader(){
     Map<String, Object> header = new HashMap<>();

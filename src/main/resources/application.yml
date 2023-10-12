@@ -37,6 +37,11 @@ spring:
     user:
       name: user
       password: 1234
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: 1234
 server:
   port: 8080
 logging:
@@ -44,7 +49,10 @@ logging:
     org.hibernate.orm.jdbc.bind: TRACE
     org.hibernate.orm.jdbc.extract: TRACE
 jwt:
-  secretKey: 12h7hd791h1293j9jk3e9j1238ej1293e8j213e
+  token:
+    access-expiration-time: 10000
+    refresh-expiration-time: 60000
+  secretKey: 123nu23n1u23h129312312312
 ---
 ---
 spring:
