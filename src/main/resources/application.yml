@@ -50,7 +50,7 @@ logging:
     org.hibernate.orm.jdbc.extract: TRACE
 jwt:
   token:
-    access-expiration-time: 10000
+    access-expiration-time: 15000
     refresh-expiration-time: 600000
   secretKey: 123nu23n1u23h129312312312
 ---

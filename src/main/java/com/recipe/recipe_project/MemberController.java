@@ -12,13 +12,13 @@ import org.antlr.v4.runtime.Token;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -26,6 +26,7 @@ import java.util.List;
 public class MemberController {
     private final MemberService memberService;
     private final RedisTemplate<String, String> redisTemplate;
+    private final MemberRepository memberRepository;
     @PostMapping("/user/signup")
     public ResponseDto signup(@Valid @RequestBody SignDto signDto, BindingResult bindingResult){
         List<String> error_list = MemberValidation.getValidationError(bindingResult);
@@ -59,10 +60,17 @@ public class MemberController {
         System.out.println(redisTemplate.opsForValue().get("account"));
         return new ResponseDto(tokenDto);
     }
-    @GetMapping("/test")
-    public String test(){
-        System.out.println(redisTemplate.opsForValue().get("account"));
-        return "success";
+    @PutMapping("/user")
+    public ResponseDto updatePw(Principal principal, Member memberDto){
+        memberService.updatePw(memberDto);
+
+        return new ResponseDto(memberRepository.findByAccount(principal.getName()).get());
+    }
+    @DeleteMapping("/user")
+    public ResponseDto delUser(Principal principal){
+        memberService.delete(principal.getName());
+        return new ResponseDto(ResponseStatus.SUCCESS);
+
     }
 
 

@@ -8,4 +8,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
   boolean existsByAccount(String account);
 
   Optional<Member> findByAccount(String account);
+
+    void deleteByAccount(String name);
 }

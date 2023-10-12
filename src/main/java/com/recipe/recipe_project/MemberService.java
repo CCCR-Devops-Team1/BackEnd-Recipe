@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.recipe.recipe_project.Dto.Response.ResponseStatus.*;
 
@@ -57,5 +58,14 @@ public class MemberService {
     }
 
     return new TokenDto(access_token,refresh_token);
+  }
+
+  public void updatePw(Member memberDto) {
+    Member member = memberRepository.findByAccount(memberDto.getAccount()).get();
+    member.setPw(memberDto.getPw());
+  }
+  @Transactional
+  public void delete(String name) {
+    memberRepository.deleteByAccount(name);
   }
 }
