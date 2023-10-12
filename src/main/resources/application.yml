@@ -21,8 +21,8 @@ spring:
     cache: false
   datasource:
     url: jdbc:mariadb://database-1.c3cliz2pwkqg.ap-northeast-2.rds.amazonaws.com:3306/cccr
-    username: root
-    password: wu0313127426
+    username: admin
+    password: recipe1234
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate:
