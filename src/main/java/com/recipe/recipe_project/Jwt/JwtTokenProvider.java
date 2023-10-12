@@ -41,7 +41,7 @@ public class JwtTokenProvider {
   private CustomUserDetailsService customUserDetailsService;
 
   // Access토큰 생성
-  public String createAccessToken(String account, String pw){
+  public String createAccessToken(String account){
     Date now = new Date();
     Date expiredDate = new Date(now.getTime() + accessExpirationTime);
     JwtBuilder builder = Jwts.builder()
@@ -53,7 +53,7 @@ public class JwtTokenProvider {
     return builder.compact();
   }
   // Refresh토큰 생성
-  public String createRefreshToken(String account, String pw){
+  public String createRefreshToken(String account){
     Date now = new Date();
     Date expiredDate = new Date(now.getTime() + refreshExpirationTime);
     String refreshToken = Jwts.builder()
@@ -105,8 +105,6 @@ public class JwtTokenProvider {
     return new UsernamePasswordAuthenticationToken(userDetails,"",userDetails.getAuthorities());
   }
   public String getUserAccount(String token) { return extractClaims(token, secretkey).get("sub").toString();}
-  public String getUserPw(String token) { return extractClaims(token, secretkey).get("pw").toString();}
-
   public boolean isExpired(String token){
     Date expiredDate = extractClaims(token, secretkey).getExpiration();
     return expiredDate.before(new Date());

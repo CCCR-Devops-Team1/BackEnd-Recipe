@@ -7,6 +7,8 @@ import com.recipe.recipe_project.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,7 +29,7 @@ public class SecurityConfig {
   @Bean
   public WebSecurityCustomizer webSecurityCustomizer(){
     return (web) -> {
-      web.ignoring().requestMatchers("/","/user/signup","/user/login","/token");
+      web.ignoring().requestMatchers("/","/user/signup","/user/login","/token","/auth/reissue");
     };
   }
   @Bean
@@ -40,6 +42,10 @@ public class SecurityConfig {
         .addFilterBefore(new JwtTokenFilter(jwtTokenProvider, memberRepository), UsernamePasswordAuthenticationFilter.class)
         .addFilterBefore(new JwtExceptionFilter(), JwtTokenFilter.class)
         .build();
+  }
+  @Bean
+  public AuthenticationManager authenticationmanager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
+    return authenticationConfiguration.getAuthenticationManager();
   }
   @Bean
   PasswordEncoder passwordEncoder(){

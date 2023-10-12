@@ -44,8 +44,8 @@ public class MemberService {
       sc.setAuthentication(authentication);
       SecurityContextHolder.setContext(sc);
 
-      access_token = jwtTokenProvider.createAccessToken(loginDto.getAccount(), loginDto.getPw());
-      refresh_token = jwtTokenProvider.createRefreshToken(loginDto.getAccount(), loginDto.getPw());
+      access_token = jwtTokenProvider.createAccessToken(loginDto.getAccount());
+      refresh_token = jwtTokenProvider.createRefreshToken(loginDto.getAccount());
     }catch(UsernameNotFoundException e){
       throw new BaseException(NOT_FOUND_MEMBER);
     } catch(Exception e){
