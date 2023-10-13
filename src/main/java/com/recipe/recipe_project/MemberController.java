@@ -74,7 +74,7 @@ public class MemberController {
     }
     @GetMapping("/test")
     public String test(){
-        return "github-webhook test";
+        return "github-webhook test2";
     }
 
 
