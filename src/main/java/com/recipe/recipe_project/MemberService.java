@@ -5,6 +5,8 @@ import com.recipe.recipe_project.Dto.TokenDto;
 import com.recipe.recipe_project.Exception.BaseException;
 import com.recipe.recipe_project.Jwt.JwtTokenProvider;
 import com.recipe.recipe_project.Security.CustomAuthenticationProvider;
+import io.lettuce.core.RedisConnectionException;
+import io.lettuce.core.RedisException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,6 +16,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.net.UnknownHostException;
 
 import static com.recipe.recipe_project.Dto.Response.ResponseStatus.*;
 
@@ -47,7 +51,7 @@ public class MemberService {
 
       access_token = jwtTokenProvider.createAccessToken(loginDto.getAccount());
       refresh_token = jwtTokenProvider.createRefreshToken(loginDto.getAccount());
-    }catch(UsernameNotFoundException e){
+    } catch(UsernameNotFoundException e){
       throw new BaseException(NOT_FOUND_MEMBER);
     } catch(Exception e){
       e.printStackTrace();
