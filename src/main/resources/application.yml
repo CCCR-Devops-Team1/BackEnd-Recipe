@@ -46,7 +46,6 @@ server:
   port: 8080
 logging:
   file:
-    path: /home/ec2-user/logs
     name: recipe-member
   level:
     org.hibernate.orm.jdbc.bind: TRACE
