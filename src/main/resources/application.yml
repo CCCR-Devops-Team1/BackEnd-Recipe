@@ -86,7 +86,7 @@ spring:
       password: 1234
   data:
     redis:
-      host: recipe-redis-ro.khp2nx.ng.0001.apn2.cache.amazonaws.com:6379
+      host: recipe-redis-ro.khp2nx.ng.0001.apn2.cache.amazonaws.com
       port: 6379
 server:
   port: 8081
