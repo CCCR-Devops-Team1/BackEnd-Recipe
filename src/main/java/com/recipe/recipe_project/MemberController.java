@@ -72,6 +72,10 @@ public class MemberController {
         return new ResponseDto(ResponseStatus.SUCCESS);
 
     }
+    @GetMapping("/test")
+    public String test(){
+        return "github-webhook test";
+    }
 
 
 }
