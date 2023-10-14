@@ -6,6 +6,7 @@ import com.recipe.recipe_project.Dto.Response.ResponseStatus;
 import com.recipe.recipe_project.Dto.SignDto;
 import com.recipe.recipe_project.Dto.TokenDto;
 import com.recipe.recipe_project.Util.MemberValidation;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.antlr.v4.runtime.Token;
@@ -72,10 +73,9 @@ public class MemberController {
         return new ResponseDto(ResponseStatus.SUCCESS);
 
     }
-    @GetMapping("/test")
-    public String test(){
-        return "github-webhook test3";
+    @GetMapping("/user")
+    public ResponseDto getUserId(Principal principal){
+        Member member = memberService.getUser(principal.getName());
+        return new ResponseDto(member);
     }
-
-
 }

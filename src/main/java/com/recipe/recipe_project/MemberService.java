@@ -72,4 +72,8 @@ public class MemberService {
   public void delete(String name) {
     memberRepository.deleteByAccount(name);
   }
+
+  public Member getUser(String name) {
+    return memberRepository.findByAccount(name).get();
+  }
 }
