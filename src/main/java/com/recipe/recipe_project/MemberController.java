@@ -5,17 +5,12 @@ import com.recipe.recipe_project.Dto.Response.ResponseDto;
 import com.recipe.recipe_project.Dto.Response.ResponseStatus;
 import com.recipe.recipe_project.Dto.SignDto;
 import com.recipe.recipe_project.Dto.TokenDto;
-import com.recipe.recipe_project.Util.MemberValidation;
-import jakarta.servlet.http.HttpServletRequest;
+import com.recipe.recipe_project.Util.Validation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.antlr.v4.runtime.Token;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,15 +25,15 @@ public class MemberController {
     private final MemberRepository memberRepository;
     @PostMapping("/user/signup")
     public ResponseDto signup(@Valid @RequestBody SignDto signDto, BindingResult bindingResult){
-        List<String> error_list = MemberValidation.getValidationError(bindingResult);
+        List<String> error_list = Validation.getValidationError(bindingResult);
 
         if(!error_list.isEmpty()){
             return new ResponseDto(false, HttpStatus.BAD_REQUEST.value(), error_list);
         }else{
-            if(!MemberValidation.isRegexAccount(signDto.getAccount())){
+            if(!Validation.isRegexAccount(signDto.getAccount())){
                 return new ResponseDto(ResponseStatus.SIGNUP_ACCOUNT_INVALID);
             }
-            if(!MemberValidation.isRegexPw(signDto.getPw())){
+            if(!Validation.isRegexPw(signDto.getPw())){
                 return new ResponseDto(ResponseStatus.SIGNUP_PW_INVALID);
             }
             if(!signDto.getPw().equals(signDto.getConfirm_pw())){
@@ -50,7 +45,7 @@ public class MemberController {
     }
     @PostMapping(value="/user/login")
     public ResponseDto login(@Valid @RequestBody LoginDto loginDto, BindingResult bindingResult){
-        List<String> error_list = MemberValidation.getValidationError(bindingResult);
+        List<String> error_list = Validation.getValidationError(bindingResult);
 
         if(!error_list.isEmpty()){
             return new ResponseDto(error_list);

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MemberValidation {
+public class Validation {
   public static boolean isRegexAccount(String target) {
     String regex = "^[0-9a-zA-Z]{8,20}$";
     Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
