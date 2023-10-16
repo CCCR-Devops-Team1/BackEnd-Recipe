@@ -102,4 +102,8 @@ jwt:
     access-expiration-time: 10000000000
     refreshExpirationTime: 60000
   secretKey: 123nu23n1u23h129312312312
+recipe:
+  article:
+    host: localhost
+    port: 8082
 

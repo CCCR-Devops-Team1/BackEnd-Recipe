@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.net.UnknownHostException;
+import java.util.List;
 
 import static com.recipe.recipe_project.Dto.Response.ResponseStatus.*;
 
@@ -25,6 +26,7 @@ import static com.recipe.recipe_project.Dto.Response.ResponseStatus.*;
 @RequiredArgsConstructor
 public class MemberService {
   private final MemberRepository memberRepository;
+  private final ArticleRepository articleRepository;
   private final PasswordEncoder passwordEncoder;
   private final JwtTokenProvider jwtTokenProvider;
   private final CustomAuthenticationProvider customAuthenticationProvider;
@@ -70,7 +72,9 @@ public class MemberService {
   }
   @Transactional
   public void delete(String name) {
-    memberRepository.deleteByAccount(name);
+    Member member = memberRepository.findByAccount(name).get();
+    articleRepository.deleteAllByMemberId(member.getId());
+    memberRepository.delete(member);
   }
 
   public Member getUser(String name) {
