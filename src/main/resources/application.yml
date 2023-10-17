@@ -70,8 +70,8 @@ spring:
     cache: false
   datasource:
     url: jdbc:mariadb://localhost:3306/cccr
-    username: jwy
-    password: 1234
+    username: root
+    password: wu0313127426
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate:
