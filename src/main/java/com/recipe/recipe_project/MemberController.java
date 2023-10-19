@@ -73,4 +73,8 @@ public class MemberController {
         Member member = memberService.getUser(principal.getName());
         return new ResponseDto(member);
     }
+    @GetMapping("/")
+    public String test(){
+        return "test";
+    }
 }
