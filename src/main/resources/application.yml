@@ -20,7 +20,7 @@ spring:
   freemarker:
     cache: false
   datasource:
-    url: jdbc:mariadb://database-1.c3cliz2pwkqg.ap-northeast-2.rds.amazonaws.com:3306/cccr
+    url: jdbc:mariadb://cccr.cljijk1o7s3n.ap-northeast-2.rds.amazonaws.com:3306/cccr
     username: admin
     password: recipe1234
     driver-class-name: org.mariadb.jdbc.Driver
@@ -39,7 +39,7 @@ spring:
       password: 1234
   data:
     redis:
-      host: recipe-redis-ro.khp2nx.ng.0001.apn2.cache.amazonaws.com
+      host: clustercfg.recipe-redis.hzi5ss.memorydb.ap-northeast-2.amazonaws.com
       port: 6379
       password: 1234
 server:
