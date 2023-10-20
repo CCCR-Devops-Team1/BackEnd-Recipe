@@ -39,7 +39,7 @@ spring:
       password: 1234
   data:
     redis:
-      host: clustercfg.recipe-redis.hzi5ss.memorydb.ap-northeast-2.amazonaws.com
+      host: recipe-redis.hzi5ss.clustercfg.apn2.cache.amazonaws.com
       port: 6379
       password: 1234
 server:
