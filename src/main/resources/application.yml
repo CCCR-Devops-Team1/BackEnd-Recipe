@@ -79,7 +79,7 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       dialect: org.hibernate.dialect.MariaDBDialect
     show-sql: true
     format_sql: true
