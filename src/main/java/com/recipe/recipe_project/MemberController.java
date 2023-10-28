@@ -57,8 +57,8 @@ public class MemberController {
         return new ResponseDto(tokenDto);
     }
     @PutMapping("/user")
-    public ResponseDto updatePw(Principal principal, Member memberDto){
-        memberService.updatePw(memberDto);
+    public ResponseDto updatePw(Principal principal, @RequestBody Member memberDto){
+        memberService.updatePw(memberDto,principal.getName());
 
         return new ResponseDto(memberRepository.findByAccount(principal.getName()).get());
     }

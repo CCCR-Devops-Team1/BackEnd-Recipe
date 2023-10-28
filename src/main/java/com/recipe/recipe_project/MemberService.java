@@ -66,9 +66,16 @@ public class MemberService {
     return new TokenDto(access_token,refresh_token);
   }
 
-  public void updatePw(Member memberDto) {
-    Member member = memberRepository.findByAccount(memberDto.getAccount()).get();
-    member.setPw(memberDto.getPw());
+  public void updatePw(Member memberDto, String account) {
+    Member member = memberRepository.findByAccount(account).get();
+//    Authentication authentication = customAuthenticationProvider.authenticate(
+//            new UsernamePasswordAuthenticationToken(account, memberDto.getPw()));
+//    SecurityContext sc = SecurityContextHolder.createEmptyContext();
+//    sc.setAuthentication(authentication);
+//    SecurityContextHolder.setContext(sc);
+    System.out.println(memberDto.getPw());
+    member.setPw(passwordEncoder.encode(memberDto.getPw()));
+    memberRepository.save(member);
   }
   @Transactional
   public void delete(String name) {
