@@ -74,8 +74,8 @@ spring:
     cache: false
   datasource:
     url: jdbc:mariadb://localhost:3306/cccr
-    username: jwy
-    password: 1234
+    username: root
+    password: wu0313127426
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate:
@@ -104,7 +104,7 @@ logging:
 jwt:
   token:
     access-expiration-time: 10000000000
-    refreshExpirationTime: 60000
+    refresh-expiration-time: 60000000
   secretKey: 123nu23n1u23h129312312312
 recipe:
   article:
