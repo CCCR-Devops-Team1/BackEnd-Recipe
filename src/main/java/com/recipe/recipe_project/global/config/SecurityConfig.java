@@ -24,31 +24,39 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-  private final MemberRepository memberRepository;
-  private final JwtTokenProvider jwtTokenProvider;
-  @Bean
-  public WebSecurityCustomizer webSecurityCustomizer(){
-    return (web) -> {
-      web.ignoring().requestMatchers("/","/user/signup","/user/login","/token","/auth/reissue","/test");
-    };
-  }
-  @Bean
-  SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-    return http
-        .csrf(c -> c.disable())
-        .formLogin( f -> f.disable())
-        .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .httpBasic( h -> h.disable())
-        .addFilterBefore(new JwtTokenFilter(jwtTokenProvider, memberRepository), UsernamePasswordAuthenticationFilter.class)
-        .addFilterBefore(new JwtExceptionFilter(), JwtTokenFilter.class)
-        .build();
-  }
-  @Bean
-  public AuthenticationManager authenticationmanager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
-    return authenticationConfiguration.getAuthenticationManager();
-  }
-  @Bean
-  PasswordEncoder passwordEncoder(){
-    return new BCryptPasswordEncoder();
-  }
+    private final MemberRepository memberRepository;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final CorsConfig corsConfig;
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> {
+            web.ignoring().requestMatchers("/", "/user/signup", "/user/login", "/token", "/auth/reissue", "/test");
+        };
+    }
+
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        return http
+                .csrf(c -> c.disable())
+                .formLogin(f -> f.disable())
+                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .httpBasic(h -> h.disable())
+                .addFilter(corsConfig.corsFilter())
+                .addFilterBefore(new JwtTokenFilter(jwtTokenProvider, memberRepository),
+                        UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtExceptionFilter(), JwtTokenFilter.class)
+                .build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationmanager(AuthenticationConfiguration authenticationConfiguration)
+            throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }
