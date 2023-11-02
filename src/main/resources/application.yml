@@ -57,7 +57,7 @@ jwt:
   secretKey: 123nu23n1u23h129312312312
 recipe:
   article:
-    host: www.recipetips.net/notice
+    host: recipetips.net/notice
     port: 8082
 ---
 ---
