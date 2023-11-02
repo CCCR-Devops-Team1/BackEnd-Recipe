@@ -20,7 +20,7 @@ spring:
   freemarker:
     cache: false
   datasource:
-    url: jdbc:mariadb://cccr20231029142149354700000009.cljijk1o7s3n.ap-northeast-2.rds.amazonaws.com:3306/cccr
+    url: jdbc:mariadb://cccr20231031083043504400000001.cljijk1o7s3n.ap-northeast-2.rds.amazonaws.com:3306/cccr
     username: admin
     password: recipe1234
     driver-class-name: org.mariadb.jdbc.Driver
