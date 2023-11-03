@@ -32,8 +32,9 @@ public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> {
-            web.ignoring().requestMatchers("/", "/user/signup", "/user/login", "/token", "/auth/reissue", "/test");
-            web.ignoring().requestMatchers(HttpMethod.GET, "/user/**");
+            web.ignoring().requestMatchers("/member", "/member/user/signup", "/member/user/login", "/token",
+                    "/member/auth/reissue", "/test");
+            web.ignoring().requestMatchers(HttpMethod.GET, "/member/**");
         };
     }
 

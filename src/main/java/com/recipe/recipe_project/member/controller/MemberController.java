@@ -21,16 +21,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/member")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MemberController {
     private final MemberService memberService;
     private final MemberRepository memberRepository;
 
-    @PostMapping("/user/signup")
+    @PostMapping("user/signup")
     public ResponseDto signup(@Valid @RequestBody SignDto signDto, BindingResult bindingResult) {
         List<String> error_list = Validation.getValidationError(bindingResult);
 
@@ -51,7 +53,7 @@ public class MemberController {
         }
     }
 
-    @PostMapping(value = "/user/login")
+    @PostMapping(value = "user/login")
     public ResponseDto login(@Valid @RequestBody LoginDto loginDto, BindingResult bindingResult) {
         List<String> error_list = Validation.getValidationError(bindingResult);
         if (!error_list.isEmpty()) {
@@ -61,31 +63,31 @@ public class MemberController {
         return new ResponseDto(tokenDto);
     }
 
-    @PostMapping("/user/logout")
+    @PostMapping("user/logout")
     public ResponseDto logout(Principal principal, @RequestBody TokenDto tokenDto) {
         memberService.logout(tokenDto.getRefresh_token());
         return new ResponseDto(ResponseStatus.SUCCESS);
     }
 
-    @PostMapping("/auth/reissue")
+    @PostMapping("auth/reissue")
     public ResponseDto<TokenDto> reissue(@RequestBody TokenDto tokenDto) {
         return new ResponseDto<>(memberService.reissueToken(tokenDto.getRefresh_token()));
     }
 
-    @PutMapping("/user")
+    @PutMapping("user")
     public ResponseDto updatePw(Principal principal, @RequestBody Member memberDto) {
         memberService.updatePw(memberDto, principal.getName());
         return new ResponseDto(memberRepository.findByAccount(principal.getName()).get());
     }
 
-    @DeleteMapping("/user")
+    @DeleteMapping("user")
     public ResponseDto delUser(Principal principal) {
         memberService.delete(principal.getName());
         return new ResponseDto(ResponseStatus.SUCCESS);
 
     }
 
-    @GetMapping("/user")
+    @GetMapping("user")
     public ResponseDto getUserId(Principal principal) {
         Member member = memberService.getUser(principal.getName());
         return new ResponseDto(member);
