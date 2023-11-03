@@ -50,6 +50,7 @@ logging:
   level:
     org.hibernate.orm.jdbc.bind: TRACE
     org.hibernate.orm.jdbc.extract: TRACE
+    root: info
 jwt:
   token:
     access-expiration-time: 15000
