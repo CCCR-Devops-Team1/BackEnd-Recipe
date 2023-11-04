@@ -39,10 +39,8 @@ spring:
       password: 1234
   data:
     redis:
-      replica-read-only: false
       host: clustercfg.recipe-reids.hzi5ss.apn2.cache.amazonaws.com
       port: 6379
-      password: 1234
 server:
   port: 8081
 logging:
