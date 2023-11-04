@@ -40,7 +40,7 @@ spring:
   data:
     redis:
       replica-read-only: false
-      host: recipe-redis-ro.hzi5ss.ng.0001.apn2.cache.amazonaws.com
+      host: arn:aws:elasticache:ap-northeast-2:321148377199:replicationgroup:recipe-reids
       port: 6379
       password: 1234
 server:

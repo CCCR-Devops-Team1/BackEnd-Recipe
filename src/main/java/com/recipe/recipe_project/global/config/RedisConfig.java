@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
@@ -18,19 +18,7 @@ public class RedisConfig {
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-//        LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
-//                                                          .readFrom(ReadFrom.SLAVE_PREFERRED)
-//                                                          .build();
-//        RedisStaticMasterReplicaConfiguration redisStaticMasterReplicaConfiguration =
-//                new
-//                        RedisStaticMasterReplicaConfiguration(host, port);
-//        redisStaticMasterReplicaConfiguration.addNode(host, port);
-//        return new LettuceConnectionFactory(redisStaticMasterReplicaConfiguration, clientConfig);
-        JedisConnectionFactory jedisConFactory
-                = new JedisConnectionFactory();
-        jedisConFactory.setHostName(host);
-        jedisConFactory.setPort(port);
-        return jedisConFactory;
+        return new LettuceConnectionFactory(host, port);
     }
 
     @Bean
